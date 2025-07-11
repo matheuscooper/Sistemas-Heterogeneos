@@ -1,0 +1,67 @@
+---
+title: Criar Imagem 50% Vermelha e 50% Azul (Formato PPM)
+description: Geração de uma imagem RGB manual em C++ com metade vermelha e metade azul, no formato .ppm (P3).
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# 🖼️ Criar Imagem 50% Vermelha e 50% Azul com C++
+
+Este exemplo demonstra como criar uma imagem simples no formato **PPM (P3)**, onde a metade esquerda da imagem é **vermelha** e a metade direita é **azul**, usando **C++ puro**.
+
+## 📌 Especificações da imagem
+
+- **Formato**: `.ppm` (P3 - texto)
+- **Largura**: 70 pixels
+- **Altura**: 50 pixels
+- **Cores**:
+  - Metade esquerda: Vermelho (RGB: 255 0 0)
+  - Metade direita: Azul (RGB: 0 0 255)
+
+## 📂 Estrutura da Imagem
+
+
+## 🧠 Código C++
+
+<Tabs>
+  <TabItem value="cpp" label="C++">
+
+```cpp
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    ofstream image("images/Imagem.ppm");
+
+    if (!image.is_open()) {
+        cerr << "Erro ao criar o arquivo!" << endl;
+        return 1;
+    }
+
+    int width = 70;
+    int height = 50;
+
+    // Cabeçalho do PPM (P3 = imagem em ASCII)
+    image << "P3\n";
+    image << width << " " << height << "\n";
+    image << "255\n"; // Máximo valor de cor
+
+    // Gera a imagem linha por linha
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            if (x < width / 2) {
+                image << "255 0 0 "; // Vermelho
+            } else {
+                image << "0 0 255 "; // Azul
+            }
+        }
+        image << "\n";
+    }
+
+    image.close();
+    cout << "Imagem gerada com sucesso!" << endl;
+    return 0;
+}
+
